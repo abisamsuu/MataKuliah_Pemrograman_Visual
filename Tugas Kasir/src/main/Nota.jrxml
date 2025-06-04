@@ -33,8 +33,8 @@ WHERE nota.id_nota = (
 	<variable name="subtotal" class="java.lang.Integer">
 		<variableExpression><![CDATA[$F{isi_qty}*$F{isi_harga_j}]]></variableExpression>
 	</variable>
-	<variable name="total" class="java.lang.String" calculation="Sum">
-		<variableExpression><![CDATA[$V{subtotal}]]></variableExpression>
+	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{isi_qty}*$F{isi_harga_j}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -91,14 +91,14 @@ WHERE nota.id_nota = (
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{nota_tglnota}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="445" y="44" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_kasir}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="65" y="12" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nota_idnota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="44" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_kasir}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -113,6 +113,13 @@ WHERE nota.id_nota = (
 					<bottomPen lineWidth="2.0" lineStyle="Solid"/>
 					<rightPen lineWidth="2.0" lineStyle="Solid"/>
 				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="65" height="25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[KD BRG]]></text>
+				</staticText>
 			</frame>
 			<frame>
 				<reportElement x="65" y="0" width="160" height="25"/>
@@ -123,6 +130,13 @@ WHERE nota.id_nota = (
 					<bottomPen lineWidth="2.0" lineStyle="Solid"/>
 					<rightPen lineWidth="2.0" lineStyle="Solid"/>
 				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="160" height="25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NAMA BARANG]]></text>
+				</staticText>
 			</frame>
 			<frame>
 				<reportElement x="225" y="0" width="65" height="25"/>
@@ -133,6 +147,13 @@ WHERE nota.id_nota = (
 					<bottomPen lineWidth="2.0" lineStyle="Solid"/>
 					<rightPen lineWidth="2.0" lineStyle="Solid"/>
 				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="65" height="25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[QTY]]></text>
+				</staticText>
 			</frame>
 			<frame>
 				<reportElement x="290" y="0" width="130" height="25"/>
@@ -143,6 +164,13 @@ WHERE nota.id_nota = (
 					<bottomPen lineWidth="2.0" lineStyle="Solid"/>
 					<rightPen lineWidth="2.0" lineStyle="Solid"/>
 				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="130" height="25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Harga]]></text>
+				</staticText>
 			</frame>
 			<frame>
 				<reportElement x="420" y="0" width="140" height="25"/>
@@ -153,6 +181,13 @@ WHERE nota.id_nota = (
 					<bottomPen lineWidth="2.0" lineStyle="Solid"/>
 					<rightPen lineWidth="2.0" lineStyle="Solid"/>
 				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="140" height="25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SUBTOTAL]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</columnHeader>
@@ -236,25 +271,25 @@ WHERE nota.id_nota = (
 		</band>
 	</detail>
 	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="2" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<staticText>
-				<reportElement x="361" y="12" width="84" height="20"/>
+				<reportElement x="373" y="18" width="84" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Belanja :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="460" y="12" width="100" height="20"/>
+				<reportElement x="460" y="18" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{total}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
 		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

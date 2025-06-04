@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 10:57 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- Waktu pembuatan: 04 Jun 2025 pada 07.47
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `barang`
+-- Struktur dari tabel `barang`
 --
 
 CREATE TABLE `barang` (
@@ -36,16 +36,17 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `barang`
+-- Dumping data untuk tabel `barang`
 --
 
 INSERT INTO `barang` (`kd_brg`, `nm_brg`, `jenis`, `hargabeli`, `hargajual`) VALUES
-('C5EJT3', 'Es Apel', 'Minuman', 300, 250);
+('C5EJT3', 'Es Apel', 'Minuman', 300, 250),
+('S86A67', 'Ayam Mak Jalah ', 'Makanan', 35000, 25000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `isi`
+-- Struktur dari tabel `isi`
 --
 
 CREATE TABLE `isi` (
@@ -59,7 +60,7 @@ CREATE TABLE `isi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kasir`
+-- Struktur dari tabel `kasir`
 --
 
 CREATE TABLE `kasir` (
@@ -73,7 +74,7 @@ CREATE TABLE `kasir` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `kasir`
+-- Dumping data untuk tabel `kasir`
 --
 
 INSERT INTO `kasir` (`id_kasir`, `nm_kasir`, `jenis_kelamin`, `agama`, `alamat`, `password`, `no_telp`) VALUES
@@ -82,7 +83,7 @@ INSERT INTO `kasir` (`id_kasir`, `nm_kasir`, `jenis_kelamin`, `agama`, `alamat`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nota`
+-- Struktur dari tabel `nota`
 --
 
 CREATE TABLE `nota` (
@@ -95,7 +96,7 @@ CREATE TABLE `nota` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pelanggan`
+-- Struktur dari tabel `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -107,7 +108,7 @@ CREATE TABLE `pelanggan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pelanggan`
+-- Dumping data untuk tabel `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id_plgn`, `nmplgn`, `jenis`, `telp`, `alamat`) VALUES
@@ -118,41 +119,35 @@ INSERT INTO `pelanggan` (`id_plgn`, `nmplgn`, `jenis`, `telp`, `alamat`) VALUES
 --
 
 --
--- Indexes for table `barang`
+-- Indeks untuk tabel `barang`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`kd_brg`);
 
 --
--- Indexes for table `isi`
---
-ALTER TABLE `isi`
-  ADD PRIMARY KEY (`id_nota`);
-
---
--- Indexes for table `kasir`
+-- Indeks untuk tabel `kasir`
 --
 ALTER TABLE `kasir`
   ADD PRIMARY KEY (`id_kasir`);
 
 --
--- Indexes for table `nota`
+-- Indeks untuk tabel `nota`
 --
 ALTER TABLE `nota`
   ADD PRIMARY KEY (`id_nota`);
 
 --
--- Indexes for table `pelanggan`
+-- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id_plgn`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `kasir`
+-- AUTO_INCREMENT untuk tabel `kasir`
 --
 ALTER TABLE `kasir`
   MODIFY `id_kasir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

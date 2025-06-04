@@ -12,6 +12,7 @@ import com.Query;
 import com.Connect;
 import java.sql.*;
 import java.util.Random;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,10 +25,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class Nota extends javax.swing.JFrame {
     private DefaultTableModel tabMode;
     private Connection conn = new Connect().connect();
-    
-    /**
-     * Creates new form Pelanggan
-     */
+    private ArrayList<ArrayList<String>> dataTrnk = new ArrayList();
     
     public void CetakNota(){
         System.out.print("Cetak");
@@ -598,8 +596,8 @@ public class Nota extends javax.swing.JFrame {
             try{
                 namabrg.setText(hasil.getString("nm_brg"));
                 jenis.setText(hasil.getString("jenis"));
-                hbbarang.setText(String.valueOf(hasil.getLong("hargabeli")));
-                hjbarang.setText(String.valueOf(hasil.getLong("hargajual")));
+                hbbarang.setText(String.valueOf(hasil.getLong("hargajual")));
+                hjbarang.setText(String.valueOf(hasil.getLong("hargabeli")));
                 
             }catch(Exception err){
                 System.out.println(err);
@@ -641,18 +639,24 @@ public class Nota extends javax.swing.JFrame {
         tabMode.addRow(data);
         int jmlBaris = tabMode.getRowCount();
         int totalAll = 0;
+        ArrayList<String> main = new ArrayList();
+        main.add(hjbarang.getText());
+        main.add(hbbarang.getText());
+        main.add(kdbrg.getText());
+        main.add(qty.getText());
+        dataTrnk.add(main);
         for (int i = 0; i < jmlBaris; i++) {
-        String totalStr = tabMode.getValueAt(i, 4).toString(); 
-        try {
-            int total = Integer.parseInt(totalStr);
-            totalAll += total;
-            totalBayar.setText(String.valueOf(totalAll));
-            
-        } catch (NumberFormatException e) {
-            // Handle kalau datanya bukan angka
-            System.out.println("Data total tidak valid di baris " + (i + 1));
+            String totalStr = tabMode.getValueAt(i, 4).toString(); 
+            try {
+                int total = Integer.parseInt(totalStr);
+                totalAll += total;
+                totalBayar.setText(String.valueOf(totalAll));                               
+            } catch (NumberFormatException e) {
+                // Handle kalau datanya bukan angka
+                System.out.println("Data total tidak valid di baris " + (i + 1));
+            }
         }
-    }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -665,12 +669,13 @@ public class Nota extends javax.swing.JFrame {
                 String sql = "INSERT INTO isi (id_nota,kd_brg,hb,hj,qty) VALUES (?,?,?,?,?)";
                 PreparedStatement state = this.conn.prepareStatement(sql);
                 for(int a = 0; a < rowCount; a++){
-                    
+                    System.out.println(dataTrnk.get(a).get(2));
                     state.setString(1, idNota.getText());
-                    state.setString(2, tabMode.getValueAt(a, 0).toString()); // kd_brg
-                    state.setLong(3, Long.valueOf(tabMode.getValueAt(a, 1).toString())); // hb
-                    state.setLong(4, Long.valueOf(tabMode.getValueAt(a, 2).toString())); // hj
-                    state.setInt(5, Integer.valueOf(tabMode.getValueAt(a, 3).toString())); // qty                    
+                    state.setString(2, dataTrnk.get(a).get(2)); // kd_brg
+                    state.setLong(3, Long.valueOf(dataTrnk.get(a).get(1))); // hb
+                    state.setLong(4, Long.valueOf(dataTrnk.get(a).get(0))); // hj
+                    state.setInt(5, Integer.valueOf(dataTrnk.get(a).get(3)));
+                    state.addBatch();// qty                    
                 }
                 state.executeBatch();
                 //if(hasil.length > 0){
