@@ -15,12 +15,44 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import java.util.HashMap;
+import java.io.InputStream;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 public class Nota extends javax.swing.JFrame {
     private DefaultTableModel tabMode;
     private Connection conn = new Connect().connect();
+    
     /**
      * Creates new form Pelanggan
      */
+    
+    public void CetakNota(){
+        System.out.print("Cetak");
+        try {
+            InputStream path = getClass().getResourceAsStream("./Nota.jasper");
+            if (path == null) {
+                JOptionPane.showMessageDialog(null, "Report file not found.");
+                return;
+            }
+
+            if (conn == null) {
+                JOptionPane.showMessageDialog(null, "Database connection failed.");
+                return;
+            }
+
+            HashMap<String, Object> parameter = new HashMap<>();
+            JasperPrint print = JasperFillManager.fillReport(path, parameter, conn);
+            JasperViewer.viewReport(print, false);
+
+        } catch (Exception ex) {
+            System.out.print("Errors");
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     
     protected void GenerateRoomKode(){
         String charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // karakter yang digunakan untuk kode
@@ -388,6 +420,7 @@ public class Nota extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        dataNota.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(dataNota);
         if (dataNota.getColumnModel().getColumnCount() > 0) {
             dataNota.getColumnModel().getColumn(0).setResizable(false);
@@ -424,6 +457,11 @@ public class Nota extends javax.swing.JFrame {
         });
 
         jButton6.setText("Keluar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setText("Total Harga");
@@ -609,6 +647,7 @@ public class Nota extends javax.swing.JFrame {
             int total = Integer.parseInt(totalStr);
             totalAll += total;
             totalBayar.setText(String.valueOf(totalAll));
+            
         } catch (NumberFormatException e) {
             // Handle kalau datanya bukan angka
             System.out.println("Data total tidak valid di baris " + (i + 1));
@@ -626,22 +665,29 @@ public class Nota extends javax.swing.JFrame {
                 String sql = "INSERT INTO isi (id_nota,kd_brg,hb,hj,qty) VALUES (?,?,?,?,?)";
                 PreparedStatement state = this.conn.prepareStatement(sql);
                 for(int a = 0; a < rowCount; a++){
+                    
                     state.setString(1, idNota.getText());
-                    state.setString(2, kdbrg.getText());
-                    state.setLong(3, Long.valueOf(hbbarang.getText()));
-                    state.setLong(4, Long.valueOf(hjbarang.getText()));
-                    state.setInt(5, Integer.valueOf(qty.getText()));
-                    state.addBatch();
+                    state.setString(2, tabMode.getValueAt(a, 0).toString()); // kd_brg
+                    state.setLong(3, Long.valueOf(tabMode.getValueAt(a, 1).toString())); // hb
+                    state.setLong(4, Long.valueOf(tabMode.getValueAt(a, 2).toString())); // hj
+                    state.setInt(5, Integer.valueOf(tabMode.getValueAt(a, 3).toString())); // qty                    
                 }
-                int[] hasil = state.executeBatch();
-                if(hasil.length > 0){
-                }
+                state.executeBatch();
+                //if(hasil.length > 0){
+                JOptionPane.showMessageDialog(null, "Success");
+                CetakNota();                
                 
             }catch(Exception err){
+                
                 System.out.println("err isi" + err);
             }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
