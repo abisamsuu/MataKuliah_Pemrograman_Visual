@@ -24,4 +24,4 @@ NPM : 202243501611
 ![App Screenshot](https://raw.githubusercontent.com/abisamsuu/MataKuliah_Pemrograman_Visual/refs/heads/master/Gallery/kasir_tranksaksi.PNG)
 
 ## Fitur Reports
-![App Screenshot](https://raw.githubusercontent.com/abisamsuu/MataKuliah_Pemrograman_Visual/refs/heads/master/Gallery/kasir_reports.PNG)
+![App Screenshot](https://raw.githubusercontent.com/abisamsuu/MataKuliah_Pemrograman_Visual/refs/heads/master/Gallery/kasir_reports.png)
